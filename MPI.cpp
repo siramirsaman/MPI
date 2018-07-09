@@ -6,8 +6,6 @@
 #include <vector>
 #include <math.h>
 
-#define A(i,j) A[(i) + (j) * nx]
-
 typedef double real;
 
 int main(int argc, char *argv[])
@@ -45,11 +43,11 @@ int main(int argc, char *argv[])
     {
       if(i==j)
       {
-        A(i,j) = nx+1;
+        A[(i) + (j) * nx] = nx+1;
       }
       else
       {
-        A(i,j) = 1;
+        A[(i) + (j) * nx] = 1;
       }
     }
   }
@@ -90,7 +88,7 @@ int main(int argc, char *argv[])
           dx = b[i];
           for(int j=0; j<ny; j++)
           {
-            dx -= A(i,j) * x[j];
+            dx -= A[(i) + (j) * nx] * x[j];
           }
           dx /= A(i,i);
           y[i-rank*div_size] += dx;
@@ -102,7 +100,7 @@ int main(int argc, char *argv[])
           {
             if(j != i)
             {
-              y_new -= A(i,j) * x[j];
+              y_new -= A[(i) + (j) * nx] * x[j];
             }
           }
           y_new /= A(i,i);
@@ -161,7 +159,7 @@ int main(int argc, char *argv[])
           {
             if(i != j)
             {
-              y_new -= A(i,j) * x[j];
+              y_new -= A[(i) + (j) * nx] * x[j];
             }
           }
           y_new /= A(i,i);
@@ -176,7 +174,7 @@ int main(int argc, char *argv[])
           {
             if(i != j)
             {
-              y_new -= A(i,j) * x[j];
+              y_new -= A[(i) + (j) * nx] * x[j];
             }
           }
           y_new /= A(i,i);
